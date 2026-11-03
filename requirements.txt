@@ -1,0 +1,8 @@
+# The Scholar's Codex - Dark Academia & Philosophical Task Ledger
+# ----------------------------------------------------------------------
+# Core runtime is 100% self-contained and zero-dependency!
+# It runs directly with Python's standard library (http.server, sqlite3, json).
+#
+# Optional production WSGI/HTTP servers (uncomment if deploying behind reverse proxy):
+# gunicorn>=21.2.0; sys_platform != "win32"
+# waitress>=2.1.2; sys_platform == "win32"

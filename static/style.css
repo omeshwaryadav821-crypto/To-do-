@@ -1,0 +1,605 @@
+/* ==========================================================================
+   MOCHI TASKS - MINIMAL, FUNCTIONAL & LIGHT BLUE THEME
+   Palette: Clean Whites (#fff, #f8fafc), Light Blues (#e0f2fe, #bae6fd, #0284c7), Coral Accent (#ff6b6b)
+   ========================================================================== */
+
+:root {
+  --bg-page: #f4f8fc;
+  --bg-card: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-hover: #f0f7ff;
+
+  --blue-100: #e0f2fe;
+  --blue-200: #bae6fd;
+  --blue-500: #0ea5e9;
+  --blue-600: #0284c7;
+
+  --accent: #ff6b6b;
+  --accent-hover: #fa5252;
+  --accent-light: #ffe3e3;
+
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-pill: 999px;
+
+  --shadow: 0 2px 10px rgba(2, 132, 199, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   TOP COMPANION BAR
+   ========================================================================== */
+.companion-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+}
+
+.brand-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.mochi-header-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius-lg);
+  padding: 8px 16px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mochi-header-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--blue-500);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.1);
+}
+
+.mochi-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.mochi-svg {
+  width: 100%;
+  height: 100%;
+  animation: floatBob 3s infinite ease-in-out;
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.mochi-svg.celebrate {
+  animation: jumpCelebration 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes jumpCelebration {
+  0% { transform: scale(1) translateY(0); }
+  40% { transform: scale(1.1, 0.9) translateY(-14px); }
+  70% { transform: scale(0.95, 1.05) translateY(0); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.mochi-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mochi-speech {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--blue-600);
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mochi-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mochi-level {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--blue-100);
+  color: var(--blue-600);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+}
+
+.xp-track {
+  width: 70px;
+  height: 6px;
+  background: var(--blue-100);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.xp-fill {
+  height: 100%;
+  background: var(--blue-500);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.xp-text {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   INPUT FORM SECTION
+   ========================================================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.input-main-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+#task-input {
+  flex: 1;
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#task-input:focus {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+
+.btn-secondary:hover {
+  background: var(--blue-200);
+}
+
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 5px 12px;
+}
+
+.input-sub-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.option-item select,
+.option-item input {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  background: #ffffff;
+  color: var(--text-main);
+}
+
+/* Breakdown Preview */
+.breakdown-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--blue-100);
+  border-radius: var(--radius-md);
+}
+
+.breakdown-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--blue-600);
+  margin-bottom: 6px;
+}
+
+.btn-text {
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+#breakdown-list {
+  list-style: none;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#breakdown-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   QUICK SUGGESTIONS
+   ========================================================================== */
+.suggestions-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.suggestions-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.suggestions-chips {
+  display: flex;
+  gap: 8px;
+}
+
+.suggestion-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.suggestion-chip:hover {
+  background: var(--blue-100);
+  border-color: var(--blue-200);
+  color: var(--blue-600);
+}
+
+/* ==========================================================================
+   TASKS SECTION & LIST
+   ========================================================================== */
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+  background: var(--blue-100);
+  border-color: var(--blue-200);
+  color: var(--blue-600);
+}
+
+.tasks-counter {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.task-item:hover {
+  border-color: var(--blue-200);
+}
+
+.task-item.completed {
+  opacity: 0.65;
+  background: var(--bg-subtle);
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.task-check {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.task-check:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.task-check:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.task-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.task-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+
+.tag-category {
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+
+.tag-reminder {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.btn-icon:hover {
+  color: var(--accent);
+}
+
+/* Subtasks Checklist */
+.task-subtasks {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 32px;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.subtask-check {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.subtask-text.checked {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 36px 12px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   REMINDER FLOATING BANNER
+   ========================================================================== */
+.reminder-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: #ffffff;
+  border: 1px solid var(--blue-200);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 380px;
+}
+
+.banner-icon {
+  font-size: 1.5rem;
+}
+
+.banner-content h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.banner-content p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-left: 4px;
+}

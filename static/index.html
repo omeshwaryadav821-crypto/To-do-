@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mochi Tasks ✦ Minimalist To-Do</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+</head>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="container">
+    
+    <!-- Top Companion Bar -->
+    <header class="companion-bar">
+      <div class="brand">
+        <span class="brand-icon">✨</span>
+        <h1 class="brand-name">Mochi Tasks</h1>
+      </div>
+
+      <!-- Mochi Mascot Header Display -->
+      <div class="mochi-header-card" id="mochi-pet-target" title="Click to pet Mochi!">
+        <div class="mochi-avatar">
+          <svg viewBox="0 0 100 100" class="mochi-svg" id="mochi-svg">
+            <!-- Shadow -->
+            <ellipse cx="50" cy="90" rx="30" ry="5" fill="#cbd5e1" opacity="0.4"/>
+            <!-- Little Leaf -->
+            <path d="M 50 24 Q 53 10 60 7 Q 63 15 54 22 Z" fill="#22c55e"/>
+            <!-- Body -->
+            <path class="mochi-body" d="M 24 55 C 24 32, 38 25, 50 25 C 62 25, 76 32, 76 55 C 78 78, 68 85, 50 85 C 32 85, 22 78, 24 55 Z" fill="#ffffff" stroke="#bae6fd" stroke-width="2.5"/>
+            <!-- Blush -->
+            <circle cx="33" cy="62" r="5" fill="#fda4af" opacity="0.8"/>
+            <circle cx="67" cy="62" r="5" fill="#fda4af" opacity="0.8"/>
+            <!-- Normal Eyes -->
+            <g id="eyes-normal">
+              <ellipse cx="40" cy="55" rx="3.5" ry="4.5" fill="#0f172a"/>
+              <circle cx="39" cy="53" r="1.5" fill="#ffffff"/>
+              <ellipse cx="60" cy="55" rx="3.5" ry="4.5" fill="#0f172a"/>
+              <circle cx="59" cy="53" r="1.5" fill="#ffffff"/>
+            </g>
+            <!-- Happy Eyes (Celebration) -->
+            <g id="eyes-happy" style="display: none;">
+              <path d="M 36 57 Q 40 51 44 57" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M 56 57 Q 60 51 64 57" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <!-- Smile -->
+            <path d="M 47 60 Q 50 63 53 60" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="mochi-details">
+          <div class="mochi-speech" id="mochi-speech">Ready for a productive day! 🐾</div>
+          <div class="mochi-progress">
+            <span class="mochi-level" id="mochi-level">Level 1</span>
+            <div class="xp-track">
+              <div class="xp-fill" id="mochi-xp-bar" style="width: 20%;"></div>
+            </div>
+            <span class="xp-text" id="mochi-xp-text">20/100 XP</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Task Input Form: Clear, Direct, Functional -->
+    <section class="card input-section">
+      <form id="task-form">
+        <div class="input-main-row">
+          <input 
+            type="text" 
+            id="task-input" 
+            placeholder="Type a task and press Enter... (e.g. Finish report, Drink water)" 
+            autocomplete="off"
+            required
+          >
+          <button type="button" class="btn btn-secondary" id="btn-breakdown" title="Split into 3 easy steps">
+            🪄 Steps
+          </button>
+          <button type="submit" class="btn btn-primary" id="btn-add">
+            Add Task
+          </button>
+        </div>
+
+        <!-- Quick Options: Category & Reminder -->
+        <div class="input-sub-row">
+          <div class="option-item">
+            <label for="task-category">Category:</label>
+            <select id="task-category">
+              <option value="General">General</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="Health">Health</option>
+              <option value="Study">Study</option>
+            </select>
+          </div>
+
+          <div class="option-item">
+            <label for="task-reminder-preset">Reminder:</label>
+            <select id="task-reminder-preset">
+              <option value="none">No reminder</option>
+              <option value="15m">In 15 minutes</option>
+              <option value="1h">In 1 hour</option>
+              <option value="tomorrow">Tomorrow morning (9 AM)</option>
+              <option value="custom">Custom time...</option>
+            </select>
+            <input type="datetime-local" id="task-reminder-custom" style="display: none;">
+          </div>
+        </div>
+
+        <!-- Breakdown Subtasks Preview if generated -->
+        <div class="breakdown-box" id="breakdown-box" style="display: none;">
+          <div class="breakdown-title">
+            <span>🪄 Generated 3 steps:</span>
+            <button type="button" class="btn-text" id="btn-clear-breakdown">Clear</button>
+          </div>
+          <ul id="breakdown-list"></ul>
+        </div>
+      </form>
+    </section>
+
+    <!-- Quick Suggestions: 1-Click to Add -->
+    <section class="suggestions-section">
+      <span class="suggestions-label">💡 Quick Ideas:</span>
+      <div class="suggestions-chips" id="suggestions-container">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- Filter & Tasks Section -->
+    <section class="tasks-section">
+      <div class="tasks-header">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        <span class="tasks-counter" id="tasks-counter">0 tasks</span>
+      </div>
+
+      <!-- Tasks List -->
+      <div class="tasks-list" id="tasks-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Reminder Notification Banner -->
+  <div class="reminder-banner" id="reminder-banner" style="display: none;">
+    <div class="banner-icon">🔔</div>
+    <div class="banner-content">
+      <h4 id="banner-title">Reminder</h4>
+      <p id="banner-time">It's time for this task!</p>
+    </div>
+    <div class="banner-actions">
+      <button class="btn btn-sm btn-primary" id="btn-banner-done">Done ✨</button>
+      <button class="btn btn-sm btn-secondary" id="btn-banner-snooze">Snooze 15m</button>
+      <button class="btn-close" id="btn-banner-close">&times;</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
